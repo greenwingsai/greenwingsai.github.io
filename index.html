@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GreenWings AI · cut fuel cost and carbon from the data you already fly</title>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1220; --muted:#5b6676; --line:#E7E9EE; --bg:#ffffff; --soft:#F6F8FA;
+  --accent:#0E9F6E; --accent-ink:#0B7A54; --dark:#0A0F16;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+/* biglook display font */
+h1,h2,h3,h4,.hero h1,h2.big,.feature h3,.stats b,.cta-band h2,.kicker,.eyebrow{
+  font-family:'Oswald','Open Sans',sans-serif;}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.btn{display:inline-flex;align-items:center;gap:.45rem;font-weight:600;font-size:.94rem;
+  padding:.8rem 1.35rem;border-radius:999px;border:1.5px solid transparent;transition:.18s ease;cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-ink);transform:translateY(-1px)}
+.btn-ghost{border-color:rgba(255,255,255,.45);color:#fff}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.10)}
+.btn-dark{border-color:var(--line);color:var(--ink);background:#fff}
+.btn-dark:hover{border-color:var(--ink)}
+
+/* nav */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.25s ease}
+header.scrolled{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:86px}
+.brand img.logo{height:58px;width:auto;display:block;transition:.25s ease;
+  filter:drop-shadow(0 1px 4px rgba(0,0,0,.5))}
+header.scrolled .brand img.logo{filter:none}
+.navlinks{display:flex;gap:2rem;align-items:center}
+.navlinks a{font-size:.92rem;font-weight:500;color:rgba(255,255,255,.86)}
+header.scrolled .navlinks a{color:var(--muted)}
+.navlinks a:hover{color:#fff}
+header.scrolled .navlinks a:hover{color:var(--ink)}
+.dropdown{position:relative}
+.drop-toggle{cursor:pointer;font-size:.92rem;font-weight:600;color:rgba(255,255,255,.9);
+  display:inline-flex;align-items:center;gap:.3rem;padding:.4rem 0}
+header.scrolled .drop-toggle{color:var(--ink)}
+.drop-toggle:hover{opacity:.85}
+.drop-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(6px);
+  background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 50px rgba(11,18,32,.15);
+  padding:.5rem;min-width:236px;opacity:0;visibility:hidden;transition:.16s ease;z-index:60}
+.dropdown:hover .drop-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.drop-menu a{display:block;padding:.62rem .8rem;border-radius:9px;font-size:.92rem;color:var(--ink);font-weight:500}
+.drop-menu a:hover{background:var(--soft);color:var(--accent-ink)}
+@media(max-width:860px){.navlinks{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;color:#fff;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(8,13,20,.40) 0%,rgba(8,13,20,.26) 45%,rgba(8,13,20,.72) 100%),
+  url('hero.jpg') center/cover no-repeat;transform:scale(1.05);
+  filter:saturate(1.32) brightness(1.09) contrast(1.02)}
+.hero .wrap{position:relative;z-index:2;padding-top:96px;padding-bottom:56px;text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.kicker{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:#9fe6c7;margin-bottom:1.3rem}
+.hero h1{font-size:clamp(2.7rem,6.2vw,5.1rem);font-weight:700;letter-spacing:-.005em;line-height:1.04;
+  max-width:17ch;margin-bottom:1.5rem}
+.hero p.lead{font-size:clamp(1.05rem,1.6vw,1.32rem);color:#dbe4ee;max-width:58ch;margin-bottom:2.2rem;font-weight:400}
+.hero .cta{display:flex;gap:.9rem;flex-wrap:wrap}
+.scrollcue{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.7);
+  font-size:.74rem;letter-spacing:.15em;text-transform:uppercase;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+
+/* stat band */
+.stats{background:var(--dark);color:#fff}
+.stats .grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stats .grid>div{padding:2rem 1.4rem;border-right:1px solid rgba(255,255,255,.09);text-align:center}
+.stats .grid>div:last-child{border-right:none}
+.stats b{display:block;font-size:2.3rem;font-weight:800;letter-spacing:-.03em}
+.stats span{color:#93a1b4;font-size:.88rem}
+@media(max-width:760px){.stats .grid{grid-template-columns:repeat(2,1fr)}.stats .grid>div:nth-child(2){border-right:none}}
+
+/* sections */
+section.pad{padding:52px 0}
+section[id]{scroll-margin-top:84px}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:.6rem}
+h2.big{font-size:clamp(2rem,3.6vw,3.1rem);font-weight:600;letter-spacing:-.005em;line-height:1.12;max-width:22ch}
+.sub{color:var(--muted);font-size:1.08rem;max-width:58ch;margin-top:.9rem}
+.headblock h2.big{max-width:none}
+.headblock .sub{max-width:none;margin-top:.85rem}
+
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:1.6rem}
+@media(max-width:760px){.features{grid-template-columns:1fr}}
+.feature{position:relative;border:1px solid var(--line);border-radius:16px;padding:1.5rem 1.6rem;transition:.2s ease;background:#fff}
+.feature:hover{border-color:var(--accent);box-shadow:0 12px 38px rgba(14,159,110,.10);transform:translateY(-3px)}
+.feature .num{position:absolute;top:1.6rem;right:1.8rem;font-size:.82rem;font-weight:700;color:var(--line)}
+.feature .ic{width:48px;height:48px;border-radius:13px;background:#E7F7F0;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem}
+.feature .ic svg{width:24px;height:24px;stroke:var(--accent-ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.feature h3{font-size:1.28rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem}
+.feature p{color:var(--muted);font-size:.98rem}
+
+/* split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}
+@media(max-width:860px){.split{grid-template-columns:1fr;gap:30px}}
+.soft{background:var(--soft)}
+.timeline{margin-top:1.4rem}
+.timeline .row{display:flex;gap:1.1rem;padding:1rem 0;border-top:1px solid var(--line)}
+.timeline .yr{font-weight:800;color:var(--accent-ink);min-width:72px;font-size:1.02rem}
+.timeline .row p{color:var(--muted)}
+.timeline .row b{color:var(--ink)}
+.imgcard{border-radius:20px;overflow:hidden;min-height:400px;
+  background:linear-gradient(180deg,rgba(8,13,20,.10),rgba(8,13,20,.42)),url('impact.jpg') center/cover;
+  box-shadow:0 22px 60px rgba(11,18,32,.16)}
+
+/* table */
+.cmp{margin-top:1.5rem;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.cmp table{width:100%;border-collapse:collapse;font-size:.93rem}
+.cmp th,.cmp td{padding:.95rem 1.1rem;text-align:left;border-bottom:1px solid var(--line)}
+.cmp thead th{background:var(--soft);font-weight:600;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.cmp td.gw{background:#E7F7F0;font-weight:600}
+.cmp tr:last-child td{border-bottom:none}
+.cmp .yes{color:var(--accent-ink);font-weight:700}
+.cmp .no{color:#c2c8d0}
+
+/* CTA */
+.cta-band{background:var(--dark);color:#fff;border-radius:26px;padding:3.6rem 3rem;text-align:center}
+.cta-band h2{font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:800;letter-spacing:-.03em;max-width:20ch;margin:0 auto 1rem}
+.cta-band p{color:#a9b6c6;max-width:52ch;margin:0 auto 1.8rem;font-size:1.06rem}
+
+footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer .fl{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer img{height:30px;width:auto}
+
+.reveal{opacity:1;transform:none}  /* content always visible; no scroll-hide */
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap"><nav>
+    <a class="brand" href="#top"><img class="logo" src="logo.png" alt="GreenWings AI"></a>
+    <div class="navlinks">
+      <div class="dropdown">
+        <span class="drop-toggle">Platform ▾</span>
+        <div class="drop-menu">
+          <a data-app="/">Footprint Dashboard</a>
+          <a data-app="/advisor">AI Advisor</a>
+          <a data-app="/maintenance">Predictive Maintenance</a>
+          <a data-app="/compliance">Compliance Reports</a>
+          <a data-app="/forecast">Emissions Forecast</a>
+          <a data-app="/fuel">Fuel-Burn Model</a>
+          <a data-app="/dataset">Dataset Explorer</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <span class="drop-toggle">Why GreenWings ▾</span>
+        <div class="drop-menu">
+          <a href="#product">What it does</a>
+          <a href="#impact">The contrail lever</a>
+          <a href="#why">Why now</a>
+          <a href="#compare">Compare</a>
+        </div>
+      </div>
+    </div>
+  </nav></div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="kicker">Aviation sustainability intelligence</span>
+    <h1>Cut fuel cost and carbon from the data you already fly.</h1>
+    <p class="lead">GreenWings turns the ACARS fuel and ADS-B telemetry airlines already collect into fuel
+      savings, full-impact (CO₂ + non-CO₂) accounting, verifier-ready EU-ETS compliance, and AI actions your
+      team approves.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap"><div class="grid">
+    <div><b>15,761</b><span>real flights analysed</span></div>
+    <div><b>7</b><span>emission species / flight</span></div>
+    <div><b>R²&nbsp;0.96</b><span>fuel-model accuracy</span></div>
+    <div><b>100%</b><span>human-approved actions</span></div>
+  </div></div>
+</section>
+
+<!-- PRODUCT / FEATURES -->
+<section class="pad" id="product">
+  <div class="wrap">
+    <div class="headblock reveal">
+      <div class="eyebrow">What it does</div>
+      <h2 class="big">One platform for the two numbers airlines cannot ignore: cost and carbon.</h2>
+      <p class="sub">Fuel is 25 to 30% of operating cost, and since January 2025 the EU ETS requires monitoring of
+        non-CO₂ effects. GreenWings handles both in one grounded, human-in-the-loop workflow.</p>
+    </div>
+    <div class="features">
+      <div class="feature reveal"><span class="num">01</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20c8 2 16-4 16-14C10 6 4 12 4 20z"/><path d="M4 20c4-8 10-10 14-11"/></svg></div>
+        <h3>Full-impact footprint</h3>
+        <p>CO₂ plus NOₓ, contrails, H₂O, SOₓ and soot: seven species per flight, computed from measured fuel burn rather than averages.</p>
+      </div>
+      <div class="feature reveal"><span class="num">02</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M12 4v4"/><path d="M9 13h.01M15 13h.01"/></svg></div>
+        <h3>Grounded AI advisor</h3>
+        <p>Ranked, sourced actions with what-if simulation. Every figure traces to a tool, the model never invents numbers, and your team approves each plan.</p>
+      </div>
+      <div class="feature reveal"><span class="num">03</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></div>
+        <h3>Verifier-ready compliance</h3>
+        <p>EU ETS non-CO₂ MRV and CORSIA evidence packs, downloadable in a click. No spreadsheet audits, no penalty surprises.</p>
+      </div>
+      <div class="feature reveal"><span class="num">04</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14 6a4 4 0 105 5l-8 8-4 1 1-4 8-8a4 4 0 01-2-2z"/></svg></div>
+        <h3>Predictive maintenance</h3>
+        <p>Flags airframes burning above their peers and turns unplanned AOG risk into scheduled work, recovering fuel and availability.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT / SPLIT -->
+<section class="pad soft" id="impact">
+  <div class="wrap split">
+    <div class="reveal">
+      <div class="eyebrow">The surprise lever</div>
+      <h2 class="big">Contrails warm more than all of aviation's CO₂.</h2>
+      <p class="sub">Contrail cirrus radiative forcing is 57.4 versus 34.3 mW/m² for CO₂ (Lee et al. 2021). In the
+        American Airlines and Google trial, small altitude changes on about 2% of flights cut contrail formation
+        54 to 64%, at roughly 0.3% fuel cost. GreenWings surfaces where that lever pays off.</p>
+    </div>
+    <div class="imgcard reveal" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="pad" id="why">
+  <div class="wrap split">
+    <div class="reveal">
+      <div class="eyebrow">Why now</div>
+      <h2 class="big">The compliance clock has already started.</h2>
+      <p class="sub">Regulation just made full-impact accounting mandatory, and made avoided emissions avoided cost.</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="row"><div class="yr">2025</div><p><b>EU ETS non-CO₂ MRV</b> becomes mandatory for intra-EU flights. Airlines must track exactly what GreenWings computes.</p></div>
+      <div class="row"><div class="yr">2025</div><p><b>AA and Google trial</b> proves contrail avoidance works at airline scale.</p></div>
+      <div class="row"><div class="yr">2030</div><p><b>ReFuelEU</b> mandates 6% SAF and CORSIA offsetting is in force. Every avoided tonne is avoided cost.</p></div>
+      <div class="row"><div class="yr">Now</div><p>Corporate travel buyers <b>select carriers on reported emissions</b>. Full-impact reporting is a sales asset.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="pad soft" id="compare">
+  <div class="wrap">
+    <div class="headblock reveal">
+      <div class="eyebrow">Competitive landscape</div>
+      <h2 class="big">Everyone else gives you one number, or fuel-only advice.</h2>
+      <p class="sub">GreenWings sits where no incumbent does: full-impact accounting across seven species,
+        sourced recommendations, and an agentic workflow with human approval.</p>
+    </div>
+    <div class="cmp reveal">
+      <table>
+        <thead><tr><th>Capability</th><th>ICAO / IATA</th><th>Google TIM</th><th>SkyBreathe</th><th style="color:var(--accent-ink)">GreenWings AI</th></tr></thead>
+        <tbody>
+          <tr><td>Non-CO₂ effects (NOₓ, contrails)</td><td class="no">no</td><td class="no">partial</td><td class="no">no</td><td class="gw"><span class="yes">7 species</span></td></tr>
+          <tr><td>Uses measured fuel burn</td><td class="no">no</td><td class="no">no</td><td class="yes">yes</td><td class="gw"><span class="yes">ACARS</span></td></tr>
+          <tr><td>EU ETS non-CO₂ MRV support</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="gw"><span class="yes">yes</span></td></tr>
+          <tr><td>Recommends ranked actions</td><td class="no">no</td><td class="no">no</td><td class="no">fuel only</td><td class="gw"><span class="yes">sourced</span></td></tr>
+          <tr><td>Agentic and human-in-the-loop</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td class="gw"><span class="yes">yes</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fl">
+    <div><b>GreenWings AI</b>, aviation sustainability intelligence</div>
+    <div>ICAM / BIP Toulouse 2026 · Demo data: EUROCONTROL PRC 2025 (CC BY 4.0)</div>
+  </div>
+</footer>
+
+<script>
+/* ====================================================================
+   DEPLOY: set APP_URL to your deployed Streamlit app URL (no trailing slash),
+   e.g. "https://greenwings.streamlit.app". Locally, leave it as localhost.
+   ==================================================================== */
+const APP_URL = "http://localhost:8501";
+document.querySelectorAll('[data-app]').forEach(a => a.href = APP_URL + a.getAttribute('data-app'));
+
+const hdr=document.getElementById('hdr');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
