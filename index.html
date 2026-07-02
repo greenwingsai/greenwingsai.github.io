@@ -313,7 +313,10 @@ footer img{height:30px;width:auto}
    e.g. "https://greenwings.streamlit.app". Locally, leave it as localhost.
    ==================================================================== */
 const APP_URL = "https://greenwings.streamlit.app";
-document.querySelectorAll('[data-app]').forEach(a => a.href = APP_URL + a.getAttribute('data-app'));
+// Streamlit Community Cloud only serves the app root via direct URL (deep-link
+// page paths 404 at its auth/routing edge), so every Platform link opens the app
+// at root; users then pick the tool from the app's sidebar.
+document.querySelectorAll('[data-app]').forEach(a => { a.href = APP_URL + "/"; a.target = "_blank"; a.rel = "noopener"; });
 
 const hdr=document.getElementById('hdr');
 addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
