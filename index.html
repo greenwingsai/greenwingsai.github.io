@@ -313,29 +313,39 @@ footer img{height:30px;width:auto}
    e.g. "https://greenwings.streamlit.app". Locally, leave it as localhost.
    ==================================================================== */
 const APP_URL = "https://greenwings.streamlit.app";
-// Streamlit Community Cloud only serves the app root via direct URL (deep-link
-// page paths 404 at its auth/routing edge), so every Platform link opens the app
-// at root; users then pick the tool from the app's sidebar.
-document.querySelectorAll('[data-app]').forEach(a => { a.href = APP_URL + "/"; });
-
-const hdr=document.getElementById('hdr');
-addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
-
-/* mobile menu */
 const ham=document.getElementById('hamburger'), nav=document.getElementById('navlinks');
-ham.addEventListener('click',()=>{ham.classList.toggle('open');nav.classList.toggle('open');});
-/* tap a dropdown label to expand it on mobile */
-document.querySelectorAll('.dropdown .drop-toggle').forEach(t=>{
-  t.addEventListener('click',e=>{
-    if(window.innerWidth<=860){e.preventDefault();t.parentElement.classList.toggle('open');}
+const hdr=document.getElementById('hdr');
+
+// (Re)apply Platform link targets. Streamlit Cloud only serves the app root via
+// direct URL (deep-link page paths 404), so every Platform link opens the app root.
+function applyLinks(){
+  document.querySelectorAll('[data-app]').forEach(a => { a.href = APP_URL + "/"; });
+}
+// Reset the mobile menu to a clean closed state (fixes stale state after
+// returning from the app via bfcache / back navigation).
+function closeMenu(){
+  ham.classList.remove('open'); nav.classList.remove('open');
+  document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'));
+}
+
+// Wire event listeners exactly once.
+if(!window.__gwWired){
+  window.__gwWired = true;
+  addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
+  ham.addEventListener('click',()=>{ham.classList.toggle('open');nav.classList.toggle('open');});
+  document.querySelectorAll('.dropdown .drop-toggle').forEach(t=>{
+    t.addEventListener('click',e=>{
+      if(window.innerWidth<=860){e.preventDefault();t.parentElement.classList.toggle('open');}
+    });
   });
-});
-/* tapping any link closes the mobile menu */
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-  ham.classList.remove('open');nav.classList.remove('open');
-}));
-const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}
+
+// Run on first load AND on every show (incl. bfcache restore when returning from the app).
+applyLinks();
+addEventListener('pageshow', ()=>{ applyLinks(); closeMenu(); });
 </script>
 </body>
 </html>
