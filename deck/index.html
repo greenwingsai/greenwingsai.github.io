@@ -70,8 +70,8 @@ ul li b{color:var(--ink)} .slide.dark ul li{color:#e7eef5} .slide.dark ul li b{c
 .flow .arw{color:var(--accent);font-size:1.4vw;font-weight:700}
 .gate{background:#E7F7F0;border-color:var(--accent);color:var(--accent-ink)}
 
-.brand{position:fixed;bottom:2vh;left:3vw;display:flex;align-items:center;gap:.6vw;z-index:20}
-.brand img{height:26px;max-height:3vh;width:auto;opacity:.9}
+/* the logo IMG carries class "brand" directly, so size it here (not ".brand img") */
+img.brand{position:fixed;bottom:2vh;left:3vw;height:30px;width:auto;opacity:.9;z-index:20}
 .rubric{position:fixed;top:3vh;right:3vw;z-index:20;font-family:'Oswald',sans-serif;
   font-size:.85vw;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
   background:var(--accent);color:#fff;padding:.7vh 1vw;border-radius:999px}
@@ -240,7 +240,7 @@ ul li b{color:var(--ink)} .slide.dark ul li{color:#e7eef5} .slide.dark ul li b{c
 <script>
 const slides=[...document.querySelectorAll('.slide')];
 const bar=document.getElementById('bar'), counter=document.getElementById('counter'),
-      rubric=document.getElementById('rubric'), brandImg=document.querySelector('.brand img');
+      rubric=document.getElementById('rubric'), brandImg=document.querySelector('img.brand');
 let i=0;
 function show(n){
   i=Math.max(0,Math.min(slides.length-1,n));
@@ -251,7 +251,7 @@ function show(n){
   rubric.style.display=r?'block':'none'; if(r) rubric.innerHTML=r;
   // logo colour: use white filter on dark slides
   const dark=slides[i].classList.contains('dark');
-  brandImg.style.filter=dark?'brightness(0) invert(1)':'none';
+  if(brandImg) brandImg.style.filter=dark?'brightness(0) invert(1)':'none';
   location.hash='#'+(i+1);
 }
 function go(d){show(i+d)}
