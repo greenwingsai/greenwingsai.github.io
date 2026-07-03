@@ -247,8 +247,7 @@ function show(n){
   slides.forEach((s,x)=>s.classList.toggle('active',x===i));
   bar.style.width=((i+1)/slides.length*100)+'%';
   counter.textContent=(i+1)+' / '+slides.length;
-  const r=slides[i].dataset.rubric;
-  rubric.style.display=r?'block':'none'; if(r) rubric.innerHTML=r;
+  rubric.style.display='none';  // internal rubric tags hidden from the audience
   // logo colour: use white filter on dark slides
   const dark=slides[i].classList.contains('dark');
   if(brandImg) brandImg.style.filter=dark?'brightness(0) invert(1)':'none';
